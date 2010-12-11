@@ -1,0 +1,12 @@
+diff -up jemalloc-2.0.1/include/jemalloc/internal/jemalloc_internal.h.in.orig jemalloc-2.0.1/include/jemalloc/internal/jemalloc_internal.h.in
+--- jemalloc-2.0.1/include/jemalloc/internal/jemalloc_internal.h.in.orig	2010-12-11 14:23:59.000000000 +0100
++++ jemalloc-2.0.1/include/jemalloc/internal/jemalloc_internal.h.in	2010-12-11 14:24:04.000000000 +0100
+@@ -135,7 +135,7 @@ extern void	(*JEMALLOC_P(malloc_message)
+ #ifdef __powerpc__
+ #  define LG_QUANTUM		4
+ #endif
+-#ifdef __s390x__
++#ifdef __s390__
+ #  define LG_QUANTUM		4
+ #endif
+ 
