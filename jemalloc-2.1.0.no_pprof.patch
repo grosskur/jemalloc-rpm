@@ -1,6 +1,6 @@
---- Makefile.in.orig	2010-11-18 10:58:56.977574922 +0100
-+++ Makefile.in	2010-11-18 10:59:32.307037415 +0100
-@@ -41,7 +41,6 @@
+--- Makefile.in.orig	2010-12-04 02:05:01.000000000 +0100
++++ Makefile.in	2011-01-05 23:13:32.000000000 +0100
+@@ -42,7 +42,6 @@
  endif
  
  # Lists of files.
@@ -8,7 +8,7 @@
  CHDRS := @objroot@include/jemalloc/jemalloc@install_suffix@.h \
  	@objroot@include/jemalloc/jemalloc_defs@install_suffix@.h
  CSRCS := @srcroot@src/jemalloc.c @srcroot@src/arena.c @srcroot@src/base.c \
-@@ -103,13 +102,6 @@
+@@ -123,13 +122,6 @@
  	$(CC) -o $@ $< -L@objroot@lib -ljemalloc@install_suffix@
  endif
  
@@ -22,12 +22,3 @@
  install_include:
  	install -d $(INCLUDEDIR)/jemalloc
  	@for h in $(CHDRS); do \
-@@ -130,7 +122,7 @@
- 	install -m 644 $$m $(MANDIR)/man3; \
- done
- 
--install: install_bin install_include install_lib install_man
-+install: install_include install_lib install_man
- 
- tests: $(CTESTS:@srcroot@%.c=@objroot@%)
- 

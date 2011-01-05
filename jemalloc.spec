@@ -1,7 +1,7 @@
 Name:           jemalloc
-Version:        2.0.1
+Version:        2.1.0
 
-Release:        3%{?dist}
+Release:        1%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
 
 Group:          System Environment/Libraries
@@ -11,9 +11,11 @@ Source0:        http://www.canonware.com/download/jemalloc/%{name}-%{version}.ta
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # Remove pprof, as it already exists in google-perftools
-Patch0:         jemalloc-2.0.1.no_pprof.patch
+Patch0:         jemalloc-2.1.0.no_pprof.patch
 # check for __s390__ as it's defined on both s390 and s390x
 Patch1:         jemalloc-2.0.1-s390.patch
+
+BuildRequires:  /usr/bin/xsltproc
 
 %description
 General-purpose scalable concurrent malloc(3) implementation.
@@ -34,6 +36,8 @@ developing applications that use %{name}.
 %patch1 -p1 -b .s390
 
 %build
+# This is truncated during build. Seems interesting to save.
+mv VERSION version
 %configure
 make %{?_smp_mflags}
 
@@ -41,6 +45,9 @@ make %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
+mv version VERSION
+# Install this with doc macro instead
+rm %{buildroot}%{_datadir}/doc/%{name}/jemalloc.html
 
 # None of these in fedora
 find %{buildroot}%{_libdir}/ -name '*.a' -exec rm -vf {} ';'
@@ -54,6 +61,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %{_libdir}/libjemalloc.so.*
 %doc COPYING README VERSION
+%doc doc/jemalloc.html
 
 %files devel
 %defattr(-,root,root,-)
@@ -66,6 +74,11 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Wed Jan 05 2011 Ingvar Hagelund <ingvar@redpill-linpro.com> - 2.1.0-1
+- New upstream release
+- Updated patch to remove pprof
+- Added html doc and xsltproc as a requirement to build it
+
 * Sat Dec 11 2010 Dan Horák <dan[at]danny.cz> - 2.0.1-3
 - fix build on s390
 
