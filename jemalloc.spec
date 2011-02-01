@@ -1,5 +1,5 @@
 Name:           jemalloc
-Version:        2.1.0
+Version:        2.1.1
 
 Release:        1%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
@@ -74,6 +74,9 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Tue Feb 01 2011 Ingvar Hagelund <ingvar@redpill-linpro.com> - 2.1.1-1
+- New upstream release
+
 * Wed Jan 05 2011 Ingvar Hagelund <ingvar@redpill-linpro.com> - 2.1.0-1
 - New upstream release
 - Updated patch to remove pprof
