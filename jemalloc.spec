@@ -1,5 +1,5 @@
 Name:           jemalloc
-Version:        2.2.1
+Version:        2.2.2
 
 Release:        1%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
@@ -11,7 +11,7 @@ Source0:        http://www.canonware.com/download/jemalloc/%{name}-%{version}.ta
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # Remove pprof, as it already exists in google-perftools
-Patch0:         jemalloc-2.2.0.no_pprof.patch
+Patch0:         jemalloc-2.2.2.no_pprof.patch
 # check for __s390__ as it's defined on both s390 and s390x
 Patch1:         jemalloc-2.0.1-s390.patch
 
@@ -74,6 +74,10 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Mon Aug 01 2011 Ingvar Hagelund <ingvar@redpill-linpro.com> - 2.2.2-1
+- New upstream release, closes #727103
+- Updated no_pprof patch for 2.2.2
+
 * Tue Mar 31 2011 Ingvar Hagelund <ingvar@redpill-linpro.com> - 2.2.1-1
 - New upstream release
 
