@@ -1,7 +1,7 @@
 Name:           jemalloc
 Version:        2.2.5
 
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
 
 Group:          System Environment/Libraries
@@ -36,8 +36,6 @@ developing applications that use %{name}.
 %patch1 -p1 -b .s390
 
 %build
-# This is truncated during build. Seems interesting to save.
-mv VERSION version
 %configure
 make %{?_smp_mflags}
 
@@ -45,7 +43,6 @@ make %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
-mv version VERSION
 # Install this with doc macro instead
 rm %{buildroot}%{_datadir}/doc/%{name}/jemalloc.html
 
@@ -74,6 +71,9 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Wed Feb 08 2012 Dan Horák <dan[at]danny.cz> - 2.2.5-3
+- substitute version information in the header (#788517)
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
