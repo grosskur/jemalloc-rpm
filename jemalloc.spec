@@ -1,7 +1,7 @@
 Name:           jemalloc
 Version:        2.2.5
 
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
 
 Group:          System Environment/Libraries
@@ -14,6 +14,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Patch0:         jemalloc-2.2.2.no_pprof.patch
 # check for __s390__ as it's defined on both s390 and s390x
 Patch1:         jemalloc-2.0.1-s390.patch
+# ARMv5tel has no atomic operations
+Patch2:         jemalloc-armv5-force-atomic.patch
 
 BuildRequires:  /usr/bin/xsltproc
 
@@ -34,6 +36,7 @@ developing applications that use %{name}.
 %setup -q
 %patch0
 %patch1 -p1 -b .s390
+%patch2 -p1 -b .armv5tel
 
 %build
 %configure
@@ -71,6 +74,9 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Fri Apr 20 2012 Dennis Gilmore <dennis@ausil.us> - 2.2.5-4
+- no attomics on armv5tel
+
 * Wed Feb 08 2012 Dan Horák <dan[at]danny.cz> - 2.2.5-3
 - substitute version information in the header (#788517)
 
