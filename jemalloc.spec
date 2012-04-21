@@ -1,7 +1,7 @@
 Name:           jemalloc
 Version:        2.2.5
 
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
 
 Group:          System Environment/Libraries
@@ -74,6 +74,9 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Sat Apr 21 2012 Peter Robinson <pbrobinson@fedoraproject.org> - 2.2.5-5
+- Improve ARM patch
+
 * Fri Apr 20 2012 Dennis Gilmore <dennis@ausil.us> - 2.2.5-4
 - no attomics on armv5tel
 
