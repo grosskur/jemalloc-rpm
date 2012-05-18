@@ -1,0 +1,11 @@
+--- include/jemalloc/internal/jemalloc_internal.h.in.orig	2012-05-14 08:29:24.332065965 +0200
++++ include/jemalloc/internal/jemalloc_internal.h.in	2012-05-14 08:29:39.483118492 +0200
+@@ -276,7 +276,7 @@
+ #  ifdef __powerpc__
+ #    define LG_QUANTUM		4
+ #  endif
+-#  ifdef __s390x__
++#  ifdef __s390__
+ #    define LG_QUANTUM		4
+ #  endif
+ #  ifdef __SH4__

@@ -1,0 +1,11 @@
+--- Makefile.in.orig	2012-05-14 08:25:41.859295446 +0200
++++ Makefile.in	2012-05-14 08:25:58.577353251 +0200
+@@ -69,7 +69,7 @@
+ LIBJEMALLOC := $(LIBPREFIX)jemalloc$(install_suffix)
+ 
+ # Lists of files.
+-BINS := $(srcroot)bin/pprof $(objroot)bin/jemalloc.sh
++BINS := $(objroot)bin/jemalloc.sh
+ CHDRS := $(objroot)include/jemalloc/jemalloc$(install_suffix).h \
+ 	$(objroot)include/jemalloc/jemalloc_defs$(install_suffix).h
+ CSRCS := $(srcroot)src/jemalloc.c $(srcroot)src/arena.c $(srcroot)src/atomic.c \

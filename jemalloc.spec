@@ -1,7 +1,7 @@
 Name:           jemalloc
-Version:        2.2.5
+Version:        3.0.0
 
-Release:        5%{?dist}
+Release:        1%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
 
 Group:          System Environment/Libraries
@@ -11,11 +11,13 @@ Source0:        http://www.canonware.com/download/jemalloc/%{name}-%{version}.ta
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # Remove pprof, as it already exists in google-perftools
-Patch0:         jemalloc-2.2.2.no_pprof.patch
+Patch0:         jemalloc-3.0.0.no_pprof.patch
 # check for __s390__ as it's defined on both s390 and s390x
-Patch1:         jemalloc-2.0.1-s390.patch
+Patch1:         jemalloc-3.0.0-s390.patch
 # ARMv5tel has no atomic operations
 Patch2:         jemalloc-armv5-force-atomic.patch
+# RHEL5/POWER has no atomic operations
+Patch3:         jemalloc-3.0.0.atomic_h_ppc_32bit_operations.patch
 
 BuildRequires:  /usr/bin/xsltproc
 
@@ -35,12 +37,21 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0
-%patch1 -p1 -b .s390
+%patch1 -p0 -b .s390
 %patch2 -p1 -b .armv5tel
+%ifarch ppc ppc64
+%if 0%{?rhel} == 5
+%patch3 -b .ppc
+%endif
+%endif
 
 %build
 %configure
 make %{?_smp_mflags}
+
+
+%check
+make check
 
 
 %install
@@ -60,8 +71,14 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %{_libdir}/libjemalloc.so.*
+%{_bindir}/jemalloc.sh
 %doc COPYING README VERSION
 %doc doc/jemalloc.html
+%ifarch ppc ppc64
+%if 0%{?rhel} == 5
+%doc COPYING.epel5-ppc
+%endif
+%endif
 
 %files devel
 %defattr(-,root,root,-)
@@ -74,6 +91,14 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Mon May 14 2012 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.0.0-1
+- New upstream release
+- Updated no_pprof patch to match new release
+- Updated s390 patch to match new relase
+- Added make check
+- Added new script jemalloc.sh
+- Added a patch for atomic operations on epel5/ppc
+
 * Sat Apr 21 2012 Peter Robinson <pbrobinson@fedoraproject.org> - 2.2.5-5
 - Improve ARM patch
 
