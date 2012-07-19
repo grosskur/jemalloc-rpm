@@ -1,7 +1,7 @@
 Name:           jemalloc
 Version:        3.0.0
 
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
 
 Group:          System Environment/Libraries
@@ -93,6 +93,9 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.0.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Thu May 24 2012 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.0.0-2
 - Added a patch from upstream, fixing a crash in ptmalloc_lock_all,
   closing #824646
