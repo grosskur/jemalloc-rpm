@@ -1,7 +1,7 @@
 Name:           jemalloc
-Version:        3.0.0
+Version:        3.1.0
 
-Release:        3%{?dist}
+Release:        1%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
 
 Group:          System Environment/Libraries
@@ -18,8 +18,6 @@ Patch1:         jemalloc-3.0.0-s390.patch
 Patch2:         jemalloc-armv5-force-atomic.patch
 # RHEL5/POWER has no atomic operations
 Patch3:         jemalloc-3.0.0.atomic_h_ppc_32bit_operations.patch
-# Fixes a crash in ptmalloc_lock_all_crash, bz #824646
-Patch4:         jemalloc-3.0.0.fixes_ptmalloc_lock_all_crash.patch
 BuildRequires:  /usr/bin/xsltproc
 
 %description
@@ -45,7 +43,6 @@ developing applications that use %{name}.
 %patch3 -b .ppc
 %endif
 %endif
-%patch4
 
 %build
 %configure
@@ -93,6 +90,10 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Tue Oct 23 2012 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.1.0-1
+  - New upstream release
+  - Removed ptmalloc_lock_all patch, it is merged upstream
+
 * Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.0.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
