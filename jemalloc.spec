@@ -1,5 +1,5 @@
 Name:           jemalloc
-Version:        3.3.0
+Version:        3.3.1
 
 Release:        1%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
@@ -12,8 +12,6 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # Remove pprof, as it already exists in google-perftools
 Patch0:         jemalloc-3.0.0.no_pprof.patch
-# check for __s390__ as it's defined on both s390 and s390x
-Patch1:         jemalloc-3.0.0-s390.patch
 # ARMv5tel has no atomic operations
 Patch2:         jemalloc-armv5-force-atomic.patch
 # RHEL5/POWER has no atomic operations
@@ -36,7 +34,7 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0
-%patch1 -p0 -b .s390
+
 %patch2 -p1 -b .armv5tel
 %ifarch ppc ppc64
 %if 0%{?rhel} == 5
@@ -90,6 +88,10 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Wed Mar 11 2013 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.3.1-1
+- New upstream release
+- Dropped s390 patch, it's in upstream now.
+
 * Fri Jan 25 2013 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.3.0-1
 - New upstream release
  
