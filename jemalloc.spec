@@ -1,5 +1,5 @@
 Name:           jemalloc
-Version:        3.4.0
+Version:        3.5.1
 
 Release:        1%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
@@ -11,7 +11,7 @@ Source0:        http://www.canonware.com/download/jemalloc/%{name}-%{version}.ta
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # Remove pprof, as it already exists in google-perftools
-Patch0:         jemalloc-3.0.0.no_pprof.patch
+Patch0:         jemalloc-3.5.1.no_pprof.patch
 # ARMv5tel has no atomic operations
 Patch2:         jemalloc-armv5-force-atomic.patch
 # RHEL5/POWER has no atomic operations
@@ -88,10 +88,15 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Fri Mar 28 2014 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.5.1-1
+- New upstream release
+- Updated nopprof patch to match new release
+- Fixed a few bogus changelog entries
+
 * Fri Jun 07 2013 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.4.0-1
 - New upstream release
 
-* Wed Mar 11 2013 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.3.1-1
+* Mon Mar 11 2013 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.3.1-1
 - New upstream release
 - Dropped s390 patch, it's in upstream now.
 
@@ -145,10 +150,10 @@ rm -rf %{buildroot}
 - New upstream release, closes #727103
 - Updated no_pprof patch for 2.2.2
 
-* Tue Mar 31 2011 Ingvar Hagelund <ingvar@redpill-linpro.com> - 2.2.1-1
+* Thu Mar 31 2011 Ingvar Hagelund <ingvar@redpill-linpro.com> - 2.2.1-1
 - New upstream release
 
-* Tue Mar 27 2011 Ingvar Hagelund <ingvar@redpill-linpro.com> - 2.2.0-1
+* Sun Mar 27 2011 Ingvar Hagelund <ingvar@redpill-linpro.com> - 2.2.0-1
 - New upstream release
 - Updated no_pprof patch for 2.2.0
 
