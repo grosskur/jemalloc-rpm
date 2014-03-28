@@ -93,6 +93,9 @@ rm -rf %{buildroot}
 - Updated nopprof patch to match new release
 - Fixed a few bogus changelog entries
 
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.4.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Fri Jun 07 2013 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.4.0-1
 - New upstream release
 
