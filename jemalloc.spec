@@ -89,7 +89,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Mon Mar 31 2014 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.6.0-1
-- New upstream release
+- New upstream release. This release fixes a critical regression
 
 * Fri Mar 28 2014 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.5.1-1
 - New upstream release
