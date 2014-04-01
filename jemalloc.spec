@@ -1,7 +1,7 @@
 Name:           jemalloc
 Version:        3.6.0
 
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
 
 Group:          System Environment/Libraries
@@ -16,6 +16,7 @@ Patch0:         jemalloc-3.5.1.no_pprof.patch
 Patch2:         jemalloc-armv5-force-atomic.patch
 # RHEL5/POWER has no atomic operations
 Patch3:         jemalloc-3.0.0.atomic_h_ppc_32bit_operations.patch
+Patch4:         jemalloc-3.6.0.no_explicit_altivec.patch
 BuildRequires:  /usr/bin/xsltproc
 
 %description
@@ -39,6 +40,7 @@ developing applications that use %{name}.
 %ifarch ppc ppc64
 %if 0%{?rhel} == 5
 %patch3 -b .ppc
+%patch4 -b .ppc
 %endif
 %endif
 
@@ -88,6 +90,9 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %changelog
+* Tue Apr 01 2014 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.6.0-2
+- Patch that removes explicit altivec on el5/ppc
+
 * Mon Mar 31 2014 Ingvar Hagelund <ingvar@redpill-linpro.com> - 3.6.0-1
 - New upstream release. This release fixes a critical regression 
 
