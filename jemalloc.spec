@@ -1,13 +1,29 @@
-Name:           jemalloc
+%global p_vendor         hhvm
+%define _name            jemalloc
+
+%if 0%{?p_vendor:1}
+  %global _orig_prefix   %{_prefix}
+  %global name_prefix    %{p_vendor}-
+
+  # Use the alternate locations for things.
+  %define _lib            lib 
+  %global _real_initrddir %{_initrddir}
+  %global _sysconfdir     %{_sysconfdir}/hhvm
+  %define _prefix         /opt/hhvm
+  %define _libdir         %{_prefix}/lib
+  %define _mandir         %{_datadir}/man
+%endif
+
+Name:           %{?name_prefix}%{_name}
 Version:        3.6.0
 
-Release:        2%{?dist}
+Release:        2.hhvm%{?dist}
 Summary:        General-purpose scalable concurrent malloc implementation
 
 Group:          System Environment/Libraries
 License:        BSD
 URL:            http://www.canonware.com/jemalloc/
-Source0:        http://www.canonware.com/download/jemalloc/%{name}-%{version}.tar.bz2
+Source0:        http://www.canonware.com/download/jemalloc/%{_name}-%{version}.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # Remove pprof, as it already exists in google-perftools
@@ -18,6 +34,8 @@ Patch2:         jemalloc-armv5-force-atomic.patch
 Patch3:         jemalloc-3.0.0.atomic_h_ppc_32bit_operations.patch
 Patch4:         jemalloc-3.6.0.no_explicit_altivec.patch
 BuildRequires:  /usr/bin/xsltproc
+# Don't provide un-namespaced libraries inside rpm database
+AutoReqProv: 0
 
 %description
 General-purpose scalable concurrent malloc(3) implementation.
@@ -27,13 +45,15 @@ This distribution is the stand-alone "portable" implementation of %{name}.
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
 Group:          Development/Libraries
+# Don't provide un-namespaced libraries inside rpm database
+AutoReqProv: 0
 
 %description devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{_name}-%{version}
 %patch0
 
 %patch2 -p1 -b .armv5tel
@@ -57,7 +77,7 @@ make check
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 # Install this with doc macro instead
-rm %{buildroot}%{_datadir}/doc/%{name}/jemalloc.html
+rm %{buildroot}%{_datadir}/doc/%{_name}/jemalloc.html
 
 # None of these in fedora
 find %{buildroot}%{_libdir}/ -name '*.a' -exec rm -vf {} ';'
